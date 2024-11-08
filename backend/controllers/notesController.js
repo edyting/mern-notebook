@@ -16,33 +16,32 @@ const addNote =asyncHandler(async (req,res) =>{
 })
 
 const updateNote =asyncHandler(async (req,res) =>{
-    const {title,body} = req.body;
-    const id = req.params.id;
 
-    const note = await Note.findById(id);
+    const note = await Note.findById(req.params.id);
 
     if(!note){
-        res.status(400).json({msg:"No note found with that id"})
-        // throw new(err)
-    }
+        res.status(400)
+        throw new Error("No note found with that Id")
+    } 
 
-    const updatedNote = await Note.findByIdAndUpdate(id,req.body,{new:true});    
-    res.json({updatedNote})
+    const updatedNote = await Note.findByIdAndUpdate(req.params.id,req.body,{new:true});    
+    res.json(updatedNote)
 })
 
 const deleteNote =asyncHandler(async (req,res) =>{
-    const id = req.params.id;
+   
 
-    const note = await Note.findById(id);
+    const note = await Note.findById(req.params.id);
 
     if(!note){
-        res.status(400).json({msg:"No note found with that id"})
-        // throw new(err)
+        res.status(400)
+
+        throw new Error("No note found with that id")
     }
 
-    await Note.findByIdAndDelete(id)
+    await Note.findByIdAndDelete(req.params.id)
 
-    res.json({msg:`delete note with id ...${id}`})
+    res.json({msg:`delete note with id ...${req.params.id}`})
 })
 
 
