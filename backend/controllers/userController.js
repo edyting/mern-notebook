@@ -51,7 +51,8 @@ const login = asyncHandler(async (req,res)=>{
 })
 
 const current = asyncHandler(async (req,res)=>{
-    res.status(200).json({msg:"You are the current user"})
+    const {_id,name,email} = await User.findById(req.user.id);
+    res.status(200).json({_id,name,email});
 })
 
 
