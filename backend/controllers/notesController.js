@@ -21,6 +21,7 @@ const updateNote =asyncHandler(async (req,res) =>{
 
     if(!note){
         res.status(400)
+        
         throw new Error("No note found with that Id")
     } 
 
